@@ -52,7 +52,7 @@ const menuItems = [
   { text: "MISI", href: "/misi" },
   { text: "PELAYANAN", href: "/pelayanan" },
   { text: "MSJ", href: "/msj" },
-  { text: "TOKO", href: "/toko" },
+  { text: "LOGIN", href: "/login" },
 ];
 </script>
 
