@@ -1,4 +1,4 @@
-<template>
+<template><br>
   <div class="w-full max-w-sm mx-auto bg-neutral-50 rounded-3xl shadow-xl overflow-hidden p-6 md:p-8 font-sans">
     
     <div class="flex flex-col items-center mb-8">
