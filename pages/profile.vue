@@ -1,7 +1,13 @@
+<script setup lang="ts">
+definePageMeta({ middleware: 'auth' })
+</script>
+
 <template>
   <div>
     <NavbarApp />
-    <Profile />
+    <div class="flex justify-center py-10 px-4">
+      <Profile />
+    </div>
     <FooterLogin />
   </div>
 </template>
