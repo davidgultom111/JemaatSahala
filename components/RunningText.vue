@@ -1,8 +1,11 @@
 <template>
-  <div class="bg-neutral-900 border-y border-gray-800 py-3 overflow-hidden shadow-md">
-    <div class="flex whitespace-nowrap animate-marquee px-2">
-      <span v-for="i in 6" :key="i" class="text-white font-bold uppercase tracking-widest px-4 text-xs md:text-sm"> 
-        Berdiri Karena Anugrahnya &nbsp; | &nbsp; Diberkati Untuk Menjadi Berkat &nbsp; | 
+  <div class="bg-yellow-400 py-2.5 overflow-hidden">
+    <div class="flex whitespace-nowrap animate-marquee">
+      <span v-for="i in 8" :key="i" class="inline-flex items-center gap-4 text-gray-900 font-bold uppercase tracking-widest px-6 text-xs">
+        Berdiri Karena AnugerahNya
+        <span class="w-1.5 h-1.5 rounded-full bg-gray-900/30 inline-block flex-shrink-0"></span>
+        Diberkati Untuk Menjadi Berkat
+        <span class="w-1.5 h-1.5 rounded-full bg-gray-900/30 inline-block flex-shrink-0"></span>
       </span>
     </div>
   </div>
@@ -10,15 +13,14 @@
 
 <style scoped>
 @keyframes marquee {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
   display: flex;
   width: max-content;
-  /* Durasi diatur 20s agar lebih dinamis di layar ponsel */
-  animation: marquee 20s linear infinite;
+  animation: marquee 28s linear infinite;
 }
 
 .animate-marquee:hover {

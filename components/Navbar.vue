@@ -1,41 +1,64 @@
 <template>
-  <nav class="bg-neutral-900 text-white w-full shadow-lg sticky top-0 z-50">
+  <nav class="bg-[#00334e] text-white w-full sticky top-0 z-50 border-b border-white/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <div class="flex-shrink-0 flex items-center">
-          <img src="/logos/logo gpdi.png" alt="Logo GPdI" class="h-8 w-auto mr-2" />
-          <span class="text-sm md:text-xl font-bold tracking-wide italic truncate">GPdI Sahala Palembang</span>
-        </div>
 
-        <div class="hidden lg:flex flex-1 justify-end items-center">
-          <ul class="flex space-x-4">
-            <li v-for="item in menuItems" :key="item.text">
-              <a :href="item.href" class="text-xs font-bold uppercase hover:text-yellow-400 transition">
-                {{ item.text }}
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="lg:hidden flex items-center">
-          <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white hover:text-yellow-400 focus:outline-none">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="mobileMenuOpen" class="lg:hidden absolute w-full bg-neutral-900 border-t border-gray-800 shadow-xl animate-fade-in">
-      <div class="px-4 py-4 space-y-1">
-        <a v-for="item in menuItems" :key="item.text" :href="item.href" class="block px-3 py-3 text-base font-bold uppercase text-white hover:bg-neutral-800 hover:text-yellow-400 border-b border-neutral-800 transition">
-          {{ item.text }}
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2.5 flex-shrink-0">
+          <img src="/logos/logo gpdi.png" alt="Logo GPdI" class="h-8 w-auto" />
+          <span class="text-sm md:text-base font-bold tracking-wide">
+            GPdI Sahala <span class="text-yellow-400">Palembang</span>
+          </span>
         </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden lg:flex items-center gap-1">
+          <a
+            v-for="item in menuItems"
+            :key="item.text"
+            :href="item.href"
+            class="relative text-[11px] font-semibold uppercase tracking-wider px-3 py-2 rounded-md hover:text-yellow-400 transition-colors duration-200
+                   after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:bg-yellow-400
+                   after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100"
+          >
+            {{ item.text }}
+          </a>
+        </div>
+
+        <!-- Mobile Burger -->
+        <button
+          @click="mobileMenuOpen = !mobileMenuOpen"
+          class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+          aria-label="Toggle menu"
+        >
+          <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
     </div>
+
+    <!-- Mobile Menu -->
+    <transition name="menu">
+      <div v-if="mobileMenuOpen" class="lg:hidden border-t border-white/10 bg-[#002b42]">
+        <div class="px-4 py-3 space-y-0.5">
+          <a
+            v-for="item in menuItems"
+            :key="item.text"
+            :href="item.href"
+            class="flex items-center px-3 py-3 text-sm font-semibold uppercase tracking-wide
+                   hover:text-yellow-400 hover:bg-white/5 rounded-lg transition-colors
+                   border-b border-white/5 last:border-0"
+          >
+            {{ item.text }}
+          </a>
+        </div>
+      </div>
+    </transition>
   </nav>
-  <br />
 </template>
 
 <script setup lang="ts">
@@ -43,34 +66,24 @@ import { ref } from "vue";
 const mobileMenuOpen = ref(false);
 
 const menuItems = [
-  { text: "BERANDA", href: "/" },
-  { text: "PELAYAN", href: "/gereja" },
-  { text: "IBADAH", href: "/ibadah" },
-  { text: "TERHUBUNG", href: "/terhubung" },
-  { text: "MEDIA", href: "/media" },
-  { text: "MEMBERI", href: "/memberi" },
-  { text: "MISI", href: "/misi" },
-  { text: "PELAYANAN", href: "/pelayanan" },
-  { text: "MSJ", href: "/msj" },
-  { text: "LOGIN", href: "/login" },
+  { text: "Beranda", href: "/" },
+  { text: "Pelayan", href: "/gereja" },
+//  { text: "Ibadah", href: "/ibadah" },
+ // { text: "Terhubung", href: "/terhubung" },
+ // { text: "Media", href: "/media" },
+ // { text: "Memberi", href: "/memberi" },
+ // { text: "Misi", href: "/misi" },
+ // { text: "Pelayanan", href: "/pelayanan" },
+//  { text: "MSJ", href: "/msj" },
+  { text: "Login", href: "/login" },
 ];
 </script>
 
 <style scoped>
-nav {
-  font-family: "Montserrat", sans-serif;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
+nav { font-family: "Montserrat", sans-serif; }
+
+.menu-enter-active,
+.menu-leave-active { transition: opacity 0.2s ease, transform 0.2s ease; }
+.menu-enter-from,
+.menu-leave-to { opacity: 0; transform: translateY(-6px); }
 </style>

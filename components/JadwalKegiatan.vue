@@ -1,26 +1,49 @@
 <template>
-  <section class="w-full py-16 px-4 bg-white">
-    <div class="flex flex-col items-center justify-center mb-12">
-      <h2 class="text-3xl md:text-5xl font-bold mb-4">Jadwal Kegiatan</h2>
-      <div class="w-20 h-[3px] bg-yellow-500 mx-auto mt-4"></div>
-      <br />
-      <p class="text-sm md:text-lg text-gray-600 text-center px-4">Seputar Jadwal Kegiatan GPdI Sahala Palembang</p>
-    </div>
+  <section class="w-full py-20 px-4 bg-white">
+    <div class="max-w-7xl mx-auto">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-      <div v-for="(item, index) in services" :key="index" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col p-6">
-        <h6 class="text-[10px] md:text-xs font-bold text-yellow-600 uppercase tracking-widest mb-3">
-          {{ item.category }}
-        </h6>
-        <h5 class="text-xl md:text-2xl font-serif font-bold text-neutral-900 mb-3 leading-tight">
-          {{ item.title }}
-        </h5>
-        <p class="text-sm md:text-base text-gray-600 leading-relaxed mb-6 flex-1">
-          {{ item.description }}
+      <!-- Header -->
+      <div class="text-center mb-14">
+        <span class="inline-block text-[#00334e] text-xs font-bold tracking-[0.3em] uppercase mb-3">Kegiatan Rutin</span>
+        <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-5">Jadwal Kegiatan</h2>
+        <div class="flex items-center justify-center gap-3 mb-5">
+          <div class="h-px w-12 bg-yellow-400"></div>
+          <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+          <div class="h-px w-12 bg-yellow-400"></div>
+        </div>
+        <p class="text-gray-500 text-sm md:text-base max-w-sm mx-auto">
+          Jadwal kegiatan rutin GPdI Sahala Palembang
         </p>
-        <p class="text-xs md:text-sm text-gray-500 font-bold border-t pt-4">
-          {{ item.time }}
-        </p>
+      </div>
+
+      <!-- Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          v-for="(item, index) in services"
+          :key="index"
+          class="relative bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col p-6"
+        >
+          <!-- Left accent bar -->
+          <div class="absolute left-0 top-4 bottom-4 w-1 bg-yellow-400 rounded-full"></div>
+
+          <div class="mb-4 pl-1">
+            <span class="inline-block bg-[#00334e]/8 text-[#00334e] text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">
+              {{ item.category }}
+            </span>
+          </div>
+          <h5 class="text-lg md:text-xl font-bold text-gray-900 mb-2 leading-snug pl-1">
+            {{ item.title }}
+          </h5>
+          <p class="text-sm text-gray-500 leading-relaxed flex-1 mb-5 pl-1">
+            {{ item.description }}
+          </p>
+          <div class="flex items-center gap-2 text-xs font-semibold text-gray-600 border-t border-gray-100 pt-4 pl-1">
+            <svg class="w-4 h-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {{ item.time }}
+          </div>
+        </div>
       </div>
     </div>
   </section>
