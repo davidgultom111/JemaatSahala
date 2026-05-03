@@ -3,9 +3,9 @@ definePageMeta({ middleware: 'auth' })
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen bg-slate-50 flex flex-col">
     <NavbarApp />
-    <div class="flex justify-center py-10 px-4">
+    <div class="flex-1 py-10 px-4">
       <Profile />
     </div>
     <FooterLogin />

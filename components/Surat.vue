@@ -13,7 +13,6 @@ const errorMsg      = ref<string | null>(null)
 const expandedId    = ref<number | null>(null)
 const downloadingId = ref<number | null>(null)
 
-// Pastikan profil tersedia (bisa null setelah refresh halaman)
 onMounted(async () => {
   if (!auth.member.value) {
     await auth.fetchProfile().catch(() => {})
@@ -22,7 +21,7 @@ onMounted(async () => {
 
 const handleSearch = async () => {
   errorMsg.value = null
-  const input  = searchInput.value.trim().toLowerCase()
+  const input    = searchInput.value.trim().toLowerCase()
 
   if (!input) {
     errorMsg.value = 'Masukkan ID Jemaat atau Nama Jemaat terlebih dahulu.'
@@ -86,10 +85,10 @@ const detailFields = (letter: Letter): { label: string; value: string }[] => {
     rows.push({ label: 'Semester',     value: letter.semester ?? '-' })
     rows.push({ label: 'Nilai',        value: String(letter.nilai ?? '-') })
   } else if (t === 'surat_pengajuan_penyerahan_anak') {
-    rows.push({ label: 'Nama Anak',         value: letter.nama_anak ?? '-' })
-    rows.push({ label: 'Tempat/Tgl Lahir',  value: `${letter.tempat_lahir_anak ?? '-'}, ${formatTanggal(letter.tanggal_lahir_anak)}` })
-    rows.push({ label: 'Nama Ayah',         value: letter.nama_ayah ?? '-' })
-    rows.push({ label: 'Nama Ibu',          value: letter.nama_ibu ?? '-' })
+    rows.push({ label: 'Nama Anak',        value: letter.nama_anak ?? '-' })
+    rows.push({ label: 'Tempat/Tgl Lahir', value: `${letter.tempat_lahir_anak ?? '-'}, ${formatTanggal(letter.tanggal_lahir_anak)}` })
+    rows.push({ label: 'Nama Ayah',        value: letter.nama_ayah ?? '-' })
+    rows.push({ label: 'Nama Ibu',         value: letter.nama_ibu ?? '-' })
   } else if (t === 'surat_pengajuan_pernikahan') {
     rows.push({ label: 'Tanggal Pernikahan', value: formatTanggal(letter.tanggal_pernikahan) })
   }
@@ -128,142 +127,175 @@ const downloadPdf = async (letter: Letter) => {
 </script>
 
 <template>
-  <section class="w-full py-10 px-4 bg-white font-sans min-h-screen">
+  <section class="w-full py-10 px-4">
     <div class="max-w-3xl mx-auto">
 
       <!-- Header -->
-      <div class="mb-8 text-center">
-        <h2 class="text-2xl md:text-3xl font-extrabold text-gray-800">Cari Surat</h2>
-        <p class="text-sm text-gray-500 mt-1">
-          Masukkan ID Jemaat atau Nama Jemaat untuk menampilkan surat Anda
-        </p>
+      <div class="mb-8">
+        <div class="inline-flex items-center gap-2 bg-[#00334e]/8 border border-[#00334e]/15 text-[#00334e] text-xs font-bold tracking-[0.3em] uppercase px-4 py-2 rounded-full mb-4">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Layanan Surat
+        </div>
+        <h2 class="text-2xl md:text-3xl font-black text-gray-900">Cari Surat</h2>
+        <p class="text-sm text-gray-500 mt-1">Masukkan ID Jemaat atau Nama Jemaat untuk menampilkan surat Anda.</p>
       </div>
 
-      <!-- Form Pencarian -->
-      <div class="bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-6 mb-8">
-        <label class="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-2">
+      <!-- Search card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <label class="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2">
           ID Jemaat atau Nama Jemaat
         </label>
         <div class="flex gap-3">
-          <input
-            v-model="searchInput"
-            type="text"
-            placeholder="Contoh: 15051980 atau Budi Santoso"
-            class="flex-1 px-4 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:border-[#00334e] focus:outline-none transition"
-            @keyup.enter="handleSearch"
-          />
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <input
+              v-model="searchInput"
+              type="text"
+              placeholder="Contoh: 15051980 atau Budi Santoso"
+              class="w-full pl-10 pr-4 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus:outline-none transition-all shadow-sm"
+              @keyup.enter="handleSearch"
+            />
+          </div>
           <button
             @click="handleSearch"
             :disabled="loading"
-            class="px-6 py-3 bg-[#00334e] text-white text-sm font-bold rounded-xl hover:bg-neutral-800 transition active:scale-95 disabled:opacity-50 shrink-0"
+            class="flex items-center gap-2 px-5 py-3 bg-[#00334e] hover:bg-[#004a70] text-white text-sm font-bold rounded-xl transition-all duration-200 active:scale-95 disabled:opacity-50 shrink-0 shadow-lg shadow-[#00334e]/15"
           >
+            <svg v-if="loading" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+            </svg>
             {{ loading ? 'Mencari...' : 'Cari' }}
           </button>
         </div>
-        <p v-if="errorMsg" class="mt-3 text-sm text-red-500 font-medium">{{ errorMsg }}</p>
+
+        <!-- Error msg -->
+        <div v-if="errorMsg" class="flex items-center gap-2 mt-3 bg-red-50 border border-red-200 text-red-600 text-xs px-3.5 py-2.5 rounded-xl">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          {{ errorMsg }}
+        </div>
       </div>
 
-      <!-- Loading -->
+      <!-- Loading spinner -->
       <div v-if="loading" class="flex justify-center py-16">
         <div class="w-8 h-8 border-4 border-[#00334e] border-t-transparent rounded-full animate-spin"></div>
       </div>
 
-      <!-- Setelah search berhasil -->
+      <!-- Results -->
       <template v-else-if="searched">
 
-        <!-- Tidak ada surat -->
-        <div v-if="letters.length === 0" class="text-center py-16 text-gray-400">
-          <svg class="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
-          <p class="text-sm font-medium">Belum ada surat yang diterbitkan.</p>
-          <p class="text-xs mt-1">Hubungi sekretariat untuk pengajuan surat.</p>
+        <!-- Empty state -->
+        <div v-if="letters.length === 0" class="bg-white rounded-2xl shadow-sm border border-gray-100 text-center py-16 px-6">
+          <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <p class="text-sm font-bold text-gray-700">Belum ada surat yang diterbitkan</p>
+          <p class="text-xs text-gray-400 mt-1">Hubungi sekretariat untuk pengajuan surat.</p>
         </div>
 
-        <!-- Daftar Surat -->
-        <div v-else class="space-y-4">
-          <p class="text-xs text-gray-400 mb-2">{{ letters.length }} surat ditemukan</p>
+        <!-- Letter list -->
+        <div v-else class="space-y-3">
+          <p class="text-xs text-gray-400 font-semibold mb-4">
+            <span class="text-[#00334e] font-black">{{ letters.length }}</span> surat ditemukan
+          </p>
 
           <div
             v-for="letter in letters"
             :key="letter.id"
-            class="bg-gray-50 border border-gray-100 rounded-2xl shadow-sm overflow-hidden"
+            class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
           >
-            <!-- Header kartu — klik untuk expand -->
+            <!-- Card header button -->
             <button
-              class="w-full text-left px-5 py-4 flex items-start justify-between gap-3 hover:bg-gray-100 transition"
+              class="w-full text-left group"
               @click="toggleExpand(letter.id)"
             >
-              <div class="flex-1 min-w-0">
-                <p class="text-sm font-bold text-gray-800">{{ letter.tipe_surat }}</p>
-                <p class="text-xs font-mono text-gray-500 mt-0.5">{{ letter.nomor_surat }}</p>
-                <p class="text-xs text-gray-400 mt-0.5">{{ formatTanggal(letter.tanggal_surat) }}</p>
-              </div>
-              <div class="flex items-center gap-2 shrink-0 mt-0.5">
-                <span
-                  v-if="letter.has_pdf"
-                  class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full"
-                >
-                  PDF Tersedia
-                </span>
-                <svg
-                  class="w-4 h-4 text-gray-400 transition-transform duration-200"
-                  :class="{ 'rotate-180': expandedId === letter.id }"
-                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
+              <div class="flex items-stretch">
+                <!-- Navy left strip -->
+                <div class="w-1.5 bg-[#00334e] shrink-0 rounded-l-2xl"></div>
+
+                <div class="flex-1 px-5 py-4 flex items-start justify-between gap-3 hover:bg-slate-50 transition-colors">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-gray-900">{{ letter.tipe_surat }}</p>
+                    <p class="text-xs font-mono text-gray-400 mt-0.5">{{ letter.nomor_surat }}</p>
+                    <p class="text-xs text-gray-400 mt-0.5">{{ formatTanggal(letter.tanggal_surat) }}</p>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0 mt-0.5">
+                    <span
+                      v-if="letter.has_pdf"
+                      class="text-[10px] bg-green-100 text-green-700 font-bold px-2.5 py-1 rounded-full"
+                    >
+                      PDF Tersedia
+                    </span>
+                    <svg
+                      class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                      :class="{ 'rotate-180': expandedId === letter.id }"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </button>
 
-            <!-- Detail surat yang dapat diperluas -->
+            <!-- Expandable detail -->
             <Transition
               enter-active-class="transition-all duration-200 ease-out"
-              enter-from-class="opacity-0 -translate-y-2"
+              enter-from-class="opacity-0 -translate-y-1"
               enter-to-class="opacity-100 translate-y-0"
               leave-active-class="transition-all duration-150 ease-in"
               leave-from-class="opacity-100 translate-y-0"
-              leave-to-class="opacity-0 -translate-y-2"
+              leave-to-class="opacity-0 -translate-y-1"
             >
-              <div v-if="expandedId === letter.id" class="px-5 pb-5 border-t border-gray-100">
+              <div v-if="expandedId === letter.id" class="border-t border-gray-100 px-6 py-5">
 
-                <!-- Field detail per tipe -->
-                <dl v-if="detailFields(letter).length > 0" class="mt-4 space-y-2">
+                <dl v-if="detailFields(letter).length > 0" class="space-y-2.5 mb-5">
                   <div
                     v-for="field in detailFields(letter)"
                     :key="field.label"
-                    class="flex gap-3"
+                    class="flex gap-4"
                   >
-                    <dt class="w-40 text-gray-400 text-xs shrink-0 pt-0.5">{{ field.label }}</dt>
-                    <dd class="text-gray-700 text-xs">{{ field.value }}</dd>
+                    <dt class="w-40 text-[11px] font-bold uppercase tracking-wide text-gray-400 shrink-0 pt-0.5">{{ field.label }}</dt>
+                    <dd class="text-sm text-gray-700 font-medium">{{ field.value }}</dd>
                   </div>
                 </dl>
 
-                <!-- Tombol unduh -->
-                <div class="mt-5">
-                  <button
-                    v-if="letter.has_pdf"
-                    @click="downloadPdf(letter)"
-                    :disabled="downloadingId === letter.id"
-                    class="flex items-center gap-2 px-5 py-2.5 bg-[#00334e] text-white text-xs font-bold rounded-xl hover:bg-neutral-800 transition active:scale-95 disabled:opacity-50"
-                  >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    {{ downloadingId === letter.id ? 'Mengunduh...' : 'Unduh PDF' }}
-                  </button>
-                  <p v-else class="text-xs text-gray-400 italic">
-                    PDF belum tersedia — hubungi sekretariat gereja.
-                  </p>
-                </div>
+                <button
+                  v-if="letter.has_pdf"
+                  @click="downloadPdf(letter)"
+                  :disabled="downloadingId === letter.id"
+                  class="flex items-center gap-2 px-5 py-2.5 bg-[#00334e] hover:bg-[#004a70] text-white text-xs font-bold rounded-xl transition-all duration-200 active:scale-95 disabled:opacity-50 shadow-md shadow-[#00334e]/15"
+                >
+                  <svg v-if="downloadingId === letter.id" class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                  <svg v-else class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                  {{ downloadingId === letter.id ? 'Mengunduh...' : 'Unduh PDF' }}
+                </button>
 
+                <p v-else class="text-xs text-gray-400 italic">
+                  PDF belum tersedia — hubungi sekretariat gereja.
+                </p>
               </div>
             </Transition>
           </div>
         </div>
-
       </template>
 
     </div>

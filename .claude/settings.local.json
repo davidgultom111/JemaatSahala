@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rmdir /s /q .nuxt)",
+      "Bash(rmdir /s /q node_modules\\\\.vite)"
+    ]
+  }
+}

@@ -3,8 +3,9 @@ definePageMeta({ middleware: 'auth' })
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen bg-slate-50 flex flex-col">
     <NavbarApp />
-    <Surat />
+    <Surat class="flex-1" />
+    <FooterLogin />
   </div>
 </template>

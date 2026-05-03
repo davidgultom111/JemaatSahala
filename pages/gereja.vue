@@ -1,7 +1,7 @@
 <template>
-    <div>
+  <div class="min-h-screen bg-slate-50 flex flex-col">
     <Navbar />
-    <StaffProfile />
+    <StaffProfile class="flex-1" />
     <Footer />
-    </div>
+  </div>
 </template>

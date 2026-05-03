@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col bg-[#00334e]">
     <NavbarLogin />
-    <LoginForm />
+    <LoginForm class="flex-1" />
     <FooterLogin />
   </div>
 </template>

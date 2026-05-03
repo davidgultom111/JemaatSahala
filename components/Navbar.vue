@@ -68,13 +68,6 @@ const mobileMenuOpen = ref(false);
 const menuItems = [
   { text: "Beranda", href: "/" },
   { text: "Pelayan", href: "/gereja" },
-//  { text: "Ibadah", href: "/ibadah" },
- // { text: "Terhubung", href: "/terhubung" },
- // { text: "Media", href: "/media" },
- // { text: "Memberi", href: "/memberi" },
- // { text: "Misi", href: "/misi" },
- // { text: "Pelayanan", href: "/pelayanan" },
-//  { text: "MSJ", href: "/msj" },
   { text: "Login", href: "/login" },
 ];
 </script>
