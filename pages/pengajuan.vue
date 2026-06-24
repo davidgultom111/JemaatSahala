@@ -345,46 +345,40 @@ const today = new Date().toISOString().split('T')[0]
       </div>
 
       <!-- History -->
-      <div>
-        <h2 class="font-semibold text-gray-700 mb-4">Riwayat Pengajuan Saya</h2>
+<div>
+  <h2 class="font-semibold text-gray-700 mb-4">Riwayat Pengajuan Saya</h2>
 
-        <div v-if="history.length === 0" class="bg-white rounded-2xl border border-gray-100 py-12 text-center text-gray-400">
-          <svg class="w-10 h-10 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-          </svg>
-          <p class="text-sm">Belum ada pengajuan surat.</p>
-        </div>
+  <div v-if="history.length === 0" class="bg-white rounded-2xl border border-gray-100 py-12 text-center text-gray-400">
+    <svg class="w-10 h-10 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+    </svg>
+    <p class="text-sm">Belum ada pengajuan surat.</p>
+  </div>
 
-        <div v-else class="space-y-3">
-          <div
-            v-for="item in history"
-            :key="item.id"
-            class="bg-white rounded-xl border border-gray-100 p-4 flex items-center justify-between gap-4"
-          >
-            <div class="min-w-0">
-              <p class="text-sm font-semibold text-gray-800 truncate">{{ item.tipe_surat }}</p>
-              <p class="text-xs text-gray-400 mt-0.5">
-                Diajukan {{ new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) }}
-              </p>
-              <p v-if="item.catatan" class="text-xs text-red-600 mt-1 truncate">
-                Catatan: {{ item.catatan }}
-              </p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0">
-              <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold" :class="statusClass(item.status)">
-                {{ item.status }}
-              </span>
-              <NuxtLink
-                v-if="item.letter_id"
-                :to="`/surat`"
-                class="text-xs text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap"
-              >
-                Lihat Surat →
-              </NuxtLink>
-            </div>
-          </div>
-        </div>
+  <div v-else class="space-y-3">
+    <div
+      v-for="item in history"
+      :key="item.id"
+      class="bg-white rounded-xl border border-gray-100 p-4 flex items-center justify-between gap-4"
+    >
+      <div class="min-w-0">
+        <p class="text-sm font-semibold text-gray-800 truncate">{{ item.tipe_surat }}</p>
+        <p class="text-xs text-gray-400 mt-0.5">
+          Diajukan {{ new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) }}
+        </p>
+        <p v-if="item.catatan" class="text-xs text-red-600 mt-1 truncate">
+          Catatan: {{ item.catatan }}
+        </p>
       </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold" :class="statusClass(item.status)">
+          {{ item.status }}
+        </span>
+        <!-- NuxtLink telah dihapus dari sini -->
+      </div>
+    </div>
+  </div>
+</div>
 
     </main>
 
